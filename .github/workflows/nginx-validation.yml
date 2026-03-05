@@ -4,17 +4,25 @@ on:
   push:
     branches:
       - main
+  pull_request:
 
 jobs:
   validate-nginx:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
-      - name: Install nginx
-        run: sudo apt-get update && sudo apt-get install -y nginx
+      - name: Install Nginx
+        run: |
+          sudo apt update
+          sudo apt install -y nginx
 
-      - name: Test nginx config
-        run: nginx -t
+      - name: Copy Config
+        run: |
+          sudo cp nginx/nginx.conf /etc/nginx/nginx.conf
+
+      - name: Test Nginx Config
+        run: |
+          sudo nginx -t
