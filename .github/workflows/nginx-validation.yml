@@ -1,0 +1,20 @@
+name: Nginx Config Validation
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  validate-nginx:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Install nginx
+        run: sudo apt-get update && sudo apt-get install -y nginx
+
+      - name: Test nginx config
+        run: nginx -t
